@@ -1,0 +1,15 @@
+ATIVIDADE 2 - BRAÇO ROBÓTICO (Grafo de cena)
+Disciplina: Computação Gráfica - Prof. Rodrigo Fernandes dos Santos - Unipac Barbacena
+
+Integrantes:
+  1. Pedro [COMPLETAR SOBRENOME]
+  2. [COMPLETAR NOME DO COLEGA DE DUPLA]
+
+Arquivo alterado: atividade_braco.py
+Captura do resultado (braço dobrado): capturas/resultado.png
+Como executar (a partir desta pasta): python atividade_braco.py
+  A/D giram a base (eixo Y); W/S giram o ombro e I/K giram o cotovelo (eixo Z). P salva a captura. ESC fecha.
+
+Explicação: por que foi preciso usar pivôs (Object3D) em vez de girar as caixas diretamente?
+
+Cada caixa é criada centrada na própria origem local. Se girássemos a caixa do braço diretamente, ela giraria em torno do seu centro, e não da articulação: o braço rodaria "no meio" e se soltaria da base. O pivô (um Object3D vazio, sem geometria) resolve isso porque fica posicionado exatamente na articulação (topo da base para o ombro, ponta do braço para o cotovelo), e a caixa é apenas deslocada para cima em metade da sua altura dentro dele. Ao girar o pivô, a caixa filha descreve um arco em torno do ponto da articulação, que é o movimento de um braço de verdade. Os pivôs também formam a hierarquia do grafo de cena: a matriz de mundo de um nó é a do pai multiplicada pela local, então girar o ombro leva junto cotovelo, antebraço e garra, girar o cotovelo leva antebraço e garra, e girar a base leva o braço inteiro. Sem pivôs seria preciso recalcular à mão a posição e a rotação de cada peça a cada movimento.

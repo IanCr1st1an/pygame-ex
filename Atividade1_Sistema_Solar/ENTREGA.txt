@@ -1,0 +1,15 @@
+ATIVIDADE 1 - MINI SISTEMA SOLAR (Transformações)
+Disciplina: Computação Gráfica - Prof. Rodrigo Fernandes dos Santos - Unipac Barbacena
+
+Integrantes:
+  1. Pedro [COMPLETAR SOBRENOME]
+  2. [COMPLETAR NOME DO COLEGA DE DUPLA]
+
+Arquivo alterado: atividade_sistema_solar.py
+Captura do resultado: capturas/resultado.png
+Como executar (a partir desta pasta): python atividade_sistema_solar.py
+  Setas ↑/↓ mudam a velocidade da órbita (nunca fica negativa). P salva a captura. ESC fecha.
+
+Explicação: por que a órbita usa R @ T e a rotação própria fica à direita da translação?
+
+Em uma composição A @ B @ ponto, a matriz mais à direita é aplicada primeiro. Na órbita, R @ T, a translação T leva o planeta da origem para (0.6, 0, 0), e só depois a rotação R gira esse ponto em torno da origem, que é o centro do sol. Assim o planeta percorre uma circunferência de raio 0.6. Se a ordem fosse T @ R, o planeta giraria primeiro no próprio lugar, ainda na origem, e depois seria apenas deslocado: ficaria parado a 0.6 do sol, sem orbitar. A rotação própria, por sua vez, precisa acontecer enquanto o planeta ainda está na origem, pois girar em torno da origem do objeto é girar em torno de si mesmo. Por isso ela fica à direita da translação (é aplicada antes dela): a cadeia é escala, rotação própria, translação e rotação da órbita, ou seja, R(órbita) @ T @ R(própria) @ S. Se a rotação própria ficasse à esquerda da translação, ela giraria o planeta em torno do sol, e não em torno de si. A escala também fica à direita de tudo para que não encolha o raio da órbita. A lua reaproveita a matriz da órbita do planeta e acrescenta a própria órbita, R(lua) @ T(0.2), de modo que acompanha o planeta sem herdar a rotação própria dele.
